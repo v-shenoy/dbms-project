@@ -13,6 +13,6 @@ class RegisterForm(Form):
     ])
 
 class LoginForm(Form):
-    username = StringField("Username")
-    password = PasswordField("Password")
+    username = StringField("Username", [validators.DataRequired()])
+    password = PasswordField("Password", [validators.DataRequired()])
         

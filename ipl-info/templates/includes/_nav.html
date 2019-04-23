@@ -5,5 +5,9 @@
     <a href="/rankings"> Rankings </a>
     <a href="/records"> Records </a>
     <a href="/best"> Best XI </a>
-    <a href="/login"> Login </a>
+    {% if session["logged_in"] %}
+        <a href="/logout"> Logout </a>
+    {% else %}
+        <a href="/login"> Login </a>
+    {% endif %}
 </ul>

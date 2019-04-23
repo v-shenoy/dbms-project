@@ -1,0 +1,106 @@
+.container
+{
+    height: 100%;
+    width: 99%;
+    margin: 1%;
+}
+
+.form
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: 100%;
+    width: 35%;
+}
+
+.form *
+{
+    margin-top: 5px;
+}
+
+.button 
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 30px;
+    width: 100px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer !important;
+}
+
+.form .button
+{
+    margin-top: 15px;
+    background: rgb(33, 175, 76);
+}
+
+.group
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 30px;
+}
+
+.group span
+{
+    margin-top: 15px;
+}
+
+.group .button
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(42, 175, 224);
+    color: white;
+    margin-left: 5px;
+}
+
+.button:hover
+{
+    box-shadow: 2px 2px 1px 1px rgba(100, 100, 100, 0.5);
+}
+
+.errors
+{
+    color: red;
+}
+
+.errors span 
+{
+    margin-right: 5px;
+}
+
+@media all and (max-width: 800px)
+{
+    .form
+    {
+        width: 50%;
+    }
+}
+
+@media all and (max-width: 600px)
+{
+    .form
+    {
+        width: 98%;
+    }
+}
+
+@media all and (max-width: 350px)
+{
+    .group span
+    {
+        font-size: 0.9em;
+    }
+}

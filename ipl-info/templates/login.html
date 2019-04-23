@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <h2> Login </h2>
+        {% from "includes/_formhelpers.html" import render_field %}
+        <form method="POST" action="" class="form">
+            {{render_field(form.username)}}
+            {{render_field(form.password)}}
+            <button type="submit" class="button"> Login </button>
+            <div class="group">
+                <span> Don't have an account? </span>
+                <a href="/register" class="button"> Register </a>
+            </div>
+        </form>
+    </div>
+    <link rel="stylesheet" href="static/css/form.css">
+{% endblock %}

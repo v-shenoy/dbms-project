@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <h2> Records </h2>
+        <form method="POST"  action="" class="form">        
+            <select name="record">
+                <option value="runs"> Most Runs </option>
+                <option value="hundreds"> Most Hundreds </option>
+                <option value="fifties"> Most Fifties </option>
+                <option value="sixes"> Most Sixes </option>
+                <option value="fours"> Most Fours </option>
+                <option value="wickets"> Most Wickets </option>
+                <option value="economy"> Best Economy </option>
+                <option value="wins"> Most Wins </option>
+                <option value="score"> Highest Team Score </option>
+            </select>
+            <button type="submit" class="button"> Display </button>
+        </form>
+        {% if results != None %}
+            <span> Results ordered by "{{form["record"]}}". </span>
+            <div id="results">
+                {% if type == "batsmen" %}
+                    <div class="row">
+                        <span> Player </span>
+                        <span> Country </span>
+                        <span> Matches </span>
+                        <span> Innings </span>
+                        <span> Runs </span>
+                        <span> HS </span>
+                        <span> Ave </span>
+                        <span> SR </span> 
+                        <span> 100s </span>
+                        <span> 50s </span>
+                        <span> 4s </span>
+                        <span> 6s </span>
+                    </div>
+                    {% for result in results %}
+                        <div class="row">
+                            <span> {{result["pname"]}} </span>
+                            <span> {{result["country"]}} </span>
+                            <span> {{result["matches"]}} </span>
+                            <span> {{result["innings"]}} </span>
+                            <span> {{result["runs"]}} </span>
+                            <span> {{result["highest"]}} </span>
+                            <span> {{result["average"]}} </span>
+                            <span> {{result["strike_rate"]}} </span> 
+                            <span> {{result["hundreds"]}} </span>
+                            <span> {{result["fifties"]}} </span>
+                            <span> {{result["fours"]}} </span>
+                            <span> {{result["sixes"]}} </span>
+                        </div>
+                    {% endfor %}
+                {% elif type == "bowlers" %}
+                    <div class="row">
+                        <span> Player </span>
+                        <span> Country </span>
+                        <span> Matches </span>
+                        <span> Overs </span>
+                        <span> Wickets </span>
+                        <span> Runs </span>
+                        <span> Eco </span>
+                        <span> Ave </span> 
+                        <span> Maidens </span>
+                        <span> Best Fig. </span>
+                        <span> 4Ws </span>
+                    </div>
+                    {% for result in results %}
+                        <div class="row">
+                            <span> {{result["pname"]}} </span>
+                            <span> {{result["country"]}} </span>
+                            <span> {{result["matches"]}} </span>
+                            <span> {{result["overs"]}} </span>
+                            <span> {{result["wickets"]}} </span>
+                            <span> {{result["runs"]}} </span>
+                            <span> {{result["economy"]}} </span>
+                            <span> {{result["average"]}} </span> 
+                            <span> {{result["maidens"]}} </span>
+                            <span> {{result["best_figure"]}} </span>
+                            <span> {{result["four_wicket"]}} </span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endif %} 
+    </div>
+    <link rel="stylesheet" href="static/css/form.css">
+    <link rel="stylesheet" href="static/css/records.css">
+{% endblock %}

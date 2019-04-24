@@ -97,6 +97,42 @@ def logout():
     return redirect(url_for("index"))
 
 
+@app.route("/records", methods = ["GET", "POST"])
+def records():
+    form = request.form
+    if request.method == "POST":
+        results = None
+        # Create connection
+        cur = mysql.connection.cursor()
+        if form["record"] in ["runs", "hundreds", "fifties", "sixes", "fours"]:
+            # Extract information by executing query
+            length = cur.execute('''SELECT * FROM players, batsmen WHERE 
+            (players.pid = batsmen.pid) ORDER BY {} DESC LIMIT 30'''.format(form["record"]))
+            if length > 0:
+                results = cur.fetchall()
+            flash("Showing results for \"most {}\".".format(form["record"]), "success")
+            cur.close();
+            return render_template("records.html", form=form, results=results, type="batsmen")    
+        elif form["record"] in ["wickets", "economy"]:
+            # Extract information by executing query
+            length = cur.execute('''SELECT * FROM players, bowlers WHERE 
+            (players.pid = bowlers.pid) ORDER BY {} DESC LIMIT 30'''.format(form["record"]))
+            if length > 0:
+                results = cur.fetchall()
+            if form["record"] == "wickets":
+                flash("Showing results for \"most wickets\".", "success")
+            else:
+                flash("Showing results for \"best economy\".", "success")
+                cur.close();
+            return render_template("records.html", form=form, results=results, type="bowlers")
+        else:
+            # Extract information by executing query
+            length = cur.execute('''SELECT * FROM teams ORDER BY {} DESC LIMIT 
+            30'''.format(form["record"])) 
+            cur.close();
+            return render_template("records.html", form=form, results=results, type="teams")
+    return render_template("records.html", form=form, results=None, type=None)
+
 if __name__ == "__main__":
     app.secret_key = "secret_placeholder_lmao"
     app.run(debug = True)

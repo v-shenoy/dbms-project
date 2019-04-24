@@ -6,6 +6,14 @@ html, body
     font-family: "Lato";
 }
 
+.container
+{
+    height: 99%;
+    width: 99%;
+    margin: 1%;
+    box-sizing: border-box; 
+}
+
 .nav
 {
     display: flex;

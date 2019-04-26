@@ -143,6 +143,41 @@ def records():
     return render_template("records.html", form=form, results=None, type=None)
 
 
+@app.route("/compare", methods = ["GET", "POST"])
+def compare():
+    form = request.form
+    if request.method == "POST":
+
+        cur = mysql.connection.cursor()
+        
+        player_type = form["player_type"]
+        player1 = form["player1"]
+        player2 = form["player2"]
+
+        result1 = None
+        result2 = None
+        if player_type == "batsman":
+            len1 = cur.execute('''SELECT * from players, batsmen WHERE (players.pid = batsmen.pid) 
+            AND MATCH(pname) AGAINST(\"{}\")'''.format(player1));
+            if len1 > 0:
+                result1 = cur.fetchone()
+            len2 = cur.execute('''SELECT * from players, batsmen WHERE (players.pid = batsmen.pid) 
+            AND MATCH(pname) AGAINST(\"{}\")'''.format(player2));
+            if len2 > 0:
+                result2 = cur.fetchone()
+            return render_template("compare.html", form=form, result1=result1, result2=result2, type="batsman")            
+        else:
+            len1 = cur.execute('''SELECT * from players, bowlers WHERE (players.pid = bowlers.pid) 
+            AND MATCH(pname) AGAINST(\"{}\")'''.format(player1));
+            if len1 > 0:
+                result1 = cur.fetchone()
+            len2 = cur.execute('''SELECT * from players, bowlers WHERE (players.pid = bowlers.pid) 
+            AND MATCH(pname) AGAINST(\"{}\")'''.format(player2));
+            if len2 > 0:
+                result2 = cur.fetchone()
+            return render_template("compare.html", form=form, result1=result1, result2=result2, type="bowler")            
+    return render_template("compare.html", form=form, type=None)
+
 if __name__ == "__main__":
     app.secret_key = "secret_placeholder_lmao"
     app.run(debug = True)

@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, PasswordField, validators
+from wtforms import Form, StringField, PasswordField, RadioField, validators
 
 class RegisterForm(Form):
     name = StringField("Name", [validators.Length(min=1, max=90)])
@@ -15,4 +15,3 @@ class RegisterForm(Form):
 class LoginForm(Form):
     username = StringField("Username", [validators.DataRequired()])
     password = PasswordField("Password", [validators.DataRequired()])
-        

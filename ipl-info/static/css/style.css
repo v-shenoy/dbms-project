@@ -6,12 +6,32 @@ html, body
     font-family: "Lato";
 }
 
+body
+{
+    background-image: url(../assets/background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.trans-layer
+{
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
 .container
 {
     height: 99%;
     width: 99%;
     margin: 1%;
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    z-index: 2;
+    position: relative;
 }
 
 .nav
@@ -20,10 +40,12 @@ html, body
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
-    background: rgb(33, 175, 76);
+    background: rgba(2, 126, 196, 0.9);
     list-style: none;
     margin: 0;
     padding: 0;
+    z-index: 3;
+    position: relative;
 }
 
 .nav a
@@ -39,7 +61,8 @@ html, body
 
 .nav a:hover
 {
-    background: rgb(37, 206, 87);
+    background: rgb(31, 168, 218);
+    box-shadow: 0px 2px 2px -0.5px black;
 }
 
 .alert
@@ -65,6 +88,8 @@ html, body
 {
     background: rgba(232, 168, 160, 0.3);
     color: rgb(163, 18, 0);
+    position: relative;
+    z-index: 2;
 }
 
 .alert.failure .fa-times
@@ -76,6 +101,8 @@ html, body
 {
     background: rgba(137, 229, 159, 0.3);
     color: rgb(0, 145, 34);
+    position: relative;
+    z-index: 2;
 }
 
 alert.success .fa-times

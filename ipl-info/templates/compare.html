@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <h2> Compare </h2>
+        <form method="POST" action="" class="form">
+            <span><input type="radio" name="player_type" value="batsman"> Batsman</span>
+            <span><input type="radio" name="player_type" value="bowler"> Bowler</span>
+            <div> Player 1 : <input type="textbox" name = "player1" required> </div>
+            <div> Player 2 : <input type="textbox" name = "player2" required> </div>
+            <button type="submit" class="button"> Display </button>
+        </form>
+        {% if type == "batsman" %}
+            <div id="results">
+                <div class="player">
+                    {% if result1 == None %}
+                        <h3> No results found. </h3>
+                    {% else %}
+                        <div class="row">
+                            <span class="heading"> Name </span>
+                            <span> {{result1["pname"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Country </span>
+                            <span> {{result1["country"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Batting Skill </span>
+                            <span>{{" ".join(result1["bat_hand"].split("_")) + " Batsman"}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Matches </span>
+                            <span> {{result1["matches"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Innings </span>
+                            <span> {{result1["innings"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Runs </span>
+                            <span> {{result1["runs"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Highest </span>
+                            <span> {{result1["highest"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Average </span>
+                            <span> {{result1["average"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Strike Rate </span>
+                            <span> {{result1["strike_rate"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Hundreds </span>
+                            <span> {{result1["hundreds"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Fifties </span>
+                            <span> {{result1["fifties"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Fours </span>
+                            <span> {{result1["fours"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Sixes </span>
+                            <span> {{result1["sixes"]}}</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="player">
+                    {% if result2 == None %}
+                        <h3> No results found. </h3>
+                    {% else %}
+                        <div class="row">
+                            <span class="heading"> Name </span>
+                            <span> {{result2["pname"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Country </span>
+                            <span> {{result2["country"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Batting Skill </span>
+                            <span>{{" ".join(result2["bat_hand"].split("_")) + " Batsman"}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Matches </span>
+                            <span> {{result2["matches"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Innings </span>
+                            <span> {{result2["innings"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Runs </span>
+                            <span> {{result2["runs"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Highest </span>
+                            <span> {{result2["highest"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Average </span>
+                            <span> {{result2["average"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Strike Rate </span>
+                            <span> {{result2["strike_rate"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Hundreds </span>
+                            <span> {{result2["hundreds"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Fifties </span>
+                            <span> {{result2["fifties"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Fours </span>
+                            <span> {{result2["fours"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Sixes </span>
+                            <span> {{result2["sixes"]}}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% elif type == "bowler" %}
+            <div id="results">
+                <div class="player">
+                    {% if result1 == None %}
+                        <h3> No results found. </h3>
+                    {% else %}
+                        <div class="row">
+                            <span class="heading"> Name </span>
+                            <span> {{result1["pname"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Country </span>
+                            <span> {{result1["country"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Bowling Skill </span>
+                            <span>{{result2["bowl_skill"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Matches </span>
+                            <span> {{result1["matches"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Overs </span>
+                            <span> {{result1["overs"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Wickets </span>
+                            <span> {{result1["wickets"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Runs </span>
+                            <span> {{result1["runs"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Economy </span>
+                            <span> {{result1["economy"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Average </span>
+                            <span> {{result1["average"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Maidens </span>
+                            <span> {{result1["maidens"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Best Figure </span>
+                            <span> {{result1["best_figure"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> 4W Hauls </span>
+                            <span> {{result1["four_wicket"]}}</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="player">
+                    {% if result2 == None %}
+                        <h3> No results found. </h3>
+                    {% else %}
+                        <div class="row">
+                            <span class="heading"> Name </span>
+                            <span> {{result2["pname"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Country </span>
+                            <span> {{result2["country"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Bowling Skill </span>
+                            <span>{{result2["bowl_skill"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Matches </span>
+                            <span> {{result2["matches"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Overs </span>
+                            <span> {{result2["overs"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Wickets </span>
+                            <span> {{result2["wickets"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Runs </span>
+                            <span> {{result2["runs"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Economy </span>
+                            <span> {{result2["economy"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Average </span>
+                            <span> {{result2["average"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Maidens </span>
+                            <span> {{result2["maidens"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> Best Figure </span>
+                            <span> {{result2["best_figure"]}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="heading"> 4W Hauls </span>
+                            <span> {{result2["four_wicket"]}}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <link rel="stylesheet" href="static/css/form.css">
+    <link rel="stylesheet" href="static/css/compare.css">
+{% endblock %}

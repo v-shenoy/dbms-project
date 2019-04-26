@@ -5,6 +5,7 @@ from passlib.hash import sha256_crypt
 
 from forms import RegisterForm, LoginForm
 
+
 app = Flask(__name__)
 
 # Configure MySQL
@@ -115,23 +116,32 @@ def records():
             return render_template("records.html", form=form, results=results, type="batsmen")    
         elif form["record"] in ["wickets", "economy"]:
             # Extract information by executing query
+            order = "DESC"
+            if form["record"] == "economy":
+                order = "ASC"
             length = cur.execute('''SELECT * FROM players, bowlers WHERE 
-            (players.pid = bowlers.pid) ORDER BY {} DESC LIMIT 30'''.format(form["record"]))
+            ((players.pid = bowlers.pid) AND overs > 50) ORDER BY {} {} LIMIT 30'''.format(form["record"], order))
             if length > 0:
                 results = cur.fetchall()
             if form["record"] == "wickets":
                 flash("Showing results for \"most wickets\".", "success")
             else:
                 flash("Showing results for \"best economy\".", "success")
-                cur.close();
+            cur.close();
             return render_template("records.html", form=form, results=results, type="bowlers")
         else:
             # Extract information by executing query
             length = cur.execute('''SELECT * FROM teams ORDER BY {} DESC LIMIT 
             30'''.format(form["record"])) 
-            cur.close();
+            if length > 0:
+                results = cur.fetchall()
+            if form["record"] == "highest":
+                flash("Showing results for \"highest score\".", "success")
+            else:
+                flash("Showing results for \"most wins\".", "success")
             return render_template("records.html", form=form, results=results, type="teams")
     return render_template("records.html", form=form, results=None, type=None)
+
 
 if __name__ == "__main__":
     app.secret_key = "secret_placeholder_lmao"

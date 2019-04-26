@@ -11,9 +11,9 @@
                 <option value="sixes"> Most Sixes </option>
                 <option value="fours"> Most Fours </option>
                 <option value="wickets"> Most Wickets </option>
-                <option value="economy"> Best Economy </option>
+                <option value="economy"> Best Economy ( > 50 overs ) </option>
                 <option value="wins"> Most Wins </option>
-                <option value="score"> Highest Team Score </option>
+                <option value="highest"> Highest Team Score </option>
             </select>
             <button type="submit" class="button"> Display </button>
         </form>
@@ -78,6 +78,27 @@
                             <span> {{result["maidens"]}} </span>
                             <span> {{result["best_figure"]}} </span>
                             <span> {{result["four_wicket"]}} </span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="row">
+                        <span> Team </span>
+                        <span> Matches </span>
+                        <span> Wins </span>
+                        <span> Highest </span>
+                        <span> Lowest </span>
+                        <span> Biggest Win (runs) </span>
+                        <span> Home </span> 
+                    </div>
+                    {% for result in results %}
+                        <div class="row teams">
+                            <span> {{result["tname"]}} ({{result["tcode"]}}) </span>
+                            <span> {{result["matches"]}} </span>
+                            <span> {{result["wins"]}} </span>
+                            <span> {{result["highest"]}} </span>
+                            <span> {{result["lowest"]}} </span>
+                            <span> {{result["biggest_win"]}} </span> 
+                            <span> {{result["home"]}} </span>
                         </div>
                     {% endfor %}
                 {% endif %}

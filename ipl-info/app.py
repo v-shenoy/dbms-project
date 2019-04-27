@@ -165,6 +165,7 @@ def compare():
             AND MATCH(pname) AGAINST(\"{}\")'''.format(player2));
             if len2 > 0:
                 result2 = cur.fetchone()
+            cur.close()
             return render_template("compare.html", form=form, result1=result1, result2=result2, type="batsman")            
         else:
             len1 = cur.execute('''SELECT * from players, bowlers WHERE (players.pid = bowlers.pid) 
@@ -175,8 +176,23 @@ def compare():
             AND MATCH(pname) AGAINST(\"{}\")'''.format(player2));
             if len2 > 0:
                 result2 = cur.fetchone()
+            cur.close()
             return render_template("compare.html", form=form, result1=result1, result2=result2, type="bowler")            
     return render_template("compare.html", form=form, type=None)
+
+@app.route("/rankings")
+def rankings():
+    cur = mysql.connection.cursor()
+
+    cur.execute('''SELECT * FROM players, batsmen WHERE (players.pid = batsmen.pid) 
+    ORDER BY power_index DESC LIMIT 15''')
+    batsmen = cur.fetchall()
+    
+    cur.execute('''SELECT * FROM players, bowlers WHERE (players.pid = bowlers.pid) 
+    ORDER BY power_index DESC LIMIT 15''')
+    bowlers = cur.fetchall()
+    return render_template("rankings.html", batsmen = batsmen, bowlers = bowlers)
+
 
 if __name__ == "__main__":
     app.secret_key = "secret_placeholder_lmao"

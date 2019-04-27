@@ -4,11 +4,10 @@
     height: 100px;
 }
 
-#results
+.results
 {
     height: auto;
-    width: 99%;
-    margin-right: 1%;
+    width: 100%;
     margin-top: 0.5%;
     margin-bottom: 1%;
     box-sizing: border-box;
@@ -18,23 +17,23 @@
     border-radius: 10px;
 }
 
-#results .row:first-of-type
+.results .row:first-of-type
 {
     font-weight: 700;
     border-radius: 10px 10px 0 0;
 }
 
-#results .row:last-of-type
+.results .row:last-of-type
 {
     border-radius: 0 0 10px 10px;
 }
 
-#results .row:nth-child(odd)
+.results .row:nth-child(odd)
 {
     background: rgba(33, 175, 76, 0.7);
 }
 
-#results .row:nth-child(even)
+.results .row:nth-child(even)
 {
     background:  rgba(33, 175, 76, 0.3);
 }

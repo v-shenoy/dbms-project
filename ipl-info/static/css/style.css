@@ -15,19 +15,24 @@ body
     background-attachment: fixed;
 }
 
+h2
+{
+    margin: 0;
+}
+
 .trans-layer
 {
     height: 100%;
     width: 100%;
     z-index: 1;
     position: fixed;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .container
 {
-    height: 99%;
-    width: 99%;
+    height: 98%;
+    width: 98%;
     margin: 1%;
     box-sizing: border-box;
     z-index: 2;
@@ -105,10 +110,48 @@ body
     z-index: 2;
 }
 
-alert.success .fa-times
+.alert.success .fa-times
 {
     color: rgb(0, 145, 34);
 }
+
+.side-arrow
+{
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: white;
+    background: rgba(0,0,0,0.4);
+    border-radius: 8px 0 0 8px;
+}
+
+.side-arrow .fa
+{
+    cursor: pointer;    
+}
+
+.sidebar
+{
+    position: fixed;
+    z-index: 6;
+    right: 0;
+    height: 100%;
+    width: 275px;
+    background: rgb(6, 29, 66);
+    display: none;
+    color: white;
+    overflow-y: auto;
+}
+
+
 
 @media all and (max-width: 800px)
 {
@@ -116,6 +159,92 @@ alert.success .fa-times
     {
         justify-content: space-around;
     }
+}
+
+.side-header
+{
+    height: 50px;
+    width: 100%;
+    font-weight: 900;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center; 
+    background: rgb(25, 57, 138);
+}
+
+.questions
+{
+    height: auto;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.question
+{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.question-header
+{
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.question input[type="radio"]
+{
+    cursor: pointer;
+}
+
+.option
+{
+    height: 40px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.option > span
+{
+    background: white;
+    color: black;
+    display: inline-block;
+    height: 25px;
+    width: 80%;
+    border-radius: 5px;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.button 
+{
+    background: rgb(33, 104, 178) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 30px;
+    width: 100px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.sidebar .button
+{
+    margin: auto;
+    margin-bottom: 10px;
 }
 
 @media all and (max-width: 700px)

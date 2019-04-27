@@ -11,7 +11,7 @@
             <button type="submit" class="button"> Display </button>
         </form>
         {% if type == "batsman" %}
-            <div id="results">
+            <div class="results">
                 <div class="player">
                     {% if result1 == None %}
                         <h3> No results found. </h3>
@@ -130,7 +130,7 @@
                 </div>
             </div>
         {% elif type == "bowler" %}
-            <div id="results">
+            <div class="results">
                 <div class="player">
                     {% if result1 == None %}
                         <h3> No results found. </h3>

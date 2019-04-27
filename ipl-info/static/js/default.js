@@ -1,11 +1,14 @@
-// Disabling Flash Message
-flash = document.querySelector(".alert")
-cross = document.querySelector(".fa-times")
-
-if(cross != null)
+$(".alert .fa-times").on("click", function()
 {
-    cross.addEventListener("click", function()
-    {
-        flash.style.display = "none";
-    });
-}
+    $(".alert").css("display", "none");
+});
+
+$(".side-arrow .fa-angle-double-left").on("click", function()
+{
+    $(".sidebar").animate({width: "toggle"});
+});
+
+$(".side-header .fa-times").on("click", function()
+{
+    $(".sidebar").animate({width: "toggle"});
+});

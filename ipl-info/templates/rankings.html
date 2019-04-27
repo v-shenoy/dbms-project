@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <h2> Top 15 Batsmen </h2>
+        <div class="results">
+            <div class="row">
+                <span> Player </span>
+                <span> Country </span>
+                <span> Matches </span>
+                <span> Innings </span>
+                <span> Runs </span>
+                <span> HS </span>
+                <span> Ave </span>
+                <span> SR </span> 
+                <span> 100s </span>
+                <span> 50s </span>
+                <span> 4s </span>
+                <span> 6s </span>
+                <span> Player Rating </span>
+            </div>
+            {% for batsman in batsmen %}
+                <div class="row">
+                    <span> {{batsman["pname"]}} </span>
+                    <span> {{batsman["country"]}} </span>
+                    <span> {{batsman["matches"]}} </span>
+                    <span> {{batsman["innings"]}} </span>
+                    <span> {{batsman["runs"]}} </span>
+                    <span> {{batsman["highest"]}} </span>
+                    <span> {{batsman["average"]}} </span>
+                    <span> {{batsman["strike_rate"]}} </span> 
+                    <span> {{batsman["hundreds"]}} </span>
+                    <span> {{batsman["fifties"]}} </span>
+                    <span> {{batsman["fours"]}} </span>
+                    <span> {{batsman["sixes"]}} </span>
+                    <span> {{batsman["power_index"]}} </span>
+                </div>
+            {% endfor %}
+        </div>
+        <h2> Top 15 Bowlers </h2>
+        <div class="results">
+            <div class="row">
+                <span> Player </span>
+                <span> Country </span>
+                <span> Matches </span>
+                <span> Overs </span>
+                <span> Wickets </span>
+                <span> Runs </span>
+                <span> Eco </span>
+                <span> Ave </span> 
+                <span> Maidens </span>
+                <span> Best Fig. </span>
+                <span> 4Ws </span>
+                <span> Player Rating </span>
+            </div>
+            {% for bowler in bowlers %}
+                <div class="row">
+                    <span> {{bowler["pname"]}} </span>
+                    <span> {{bowler["country"]}} </span>
+                    <span> {{bowler["matches"]}} </span>
+                    <span> {{bowler["overs"]}} </span>
+                    <span> {{bowler["wickets"]}} </span>
+                    <span> {{bowler["runs"]}} </span>
+                    <span> {{bowler["economy"]}} </span>
+                    <span> {{bowler["average"]}} </span> 
+                    <span> {{bowler["maidens"]}} </span>
+                    <span> {{bowler["best_figure"]}} </span>
+                    <span> {{bowler["four_wicket"]}} </span>
+                    <span> {{bowler["power_index"]}} </span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <link rel="stylesheet" href="static/css/form.css">
+    <link rel="stylesheet" href="static/css/records.css">
+{% endblock %}

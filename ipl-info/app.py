@@ -193,6 +193,48 @@ def rankings():
     bowlers = cur.fetchall()
     return render_template("rankings.html", batsmen = batsmen, bowlers = bowlers)
 
+@app.route("/matches", methods = ["GET", "POST"])
+def matches():
+    form = request.form
+    if request.method == "POST":
+        cur = mysql.connection.cursor()
+        match = None
+        length = cur.execute('''SELECT * FROM matches WHERE 
+        (season_id = {} AND matchid = {})'''.format(form["season_id"], form["matchid"]))
+
+        if length > 0:
+            match = cur.fetchone()
+            cur.execute('''SELECT * FROM teams WHERE tid = {}'''.format(match["team1_id"]))
+            team_one = cur.fetchone()
+            cur.execute('''SELECT * FROM teams WHERE tid = {}'''.format(match["team2_id"]))
+            team_two = cur.fetchone()
+            cur.execute('''SELECT * FROM umpires WHERE uid = {}'''.format(match["f_umpire"]))
+            f_umpire = cur.fetchone()
+            cur.execute('''SELECT * FROM umpires WHERE uid = {}'''.format(match["s_umpire"]))
+            s_umpire = cur.fetchone()
+
+            winner = None
+            mom = None
+            toss_winner = None
+            if match["toss_winner_id"] == match["team1_id"]:
+                toss_winner = team_one
+            else:
+                toss_winner = team_two
+            if match["is_result"] == 1:
+                cur.execute('''SELECT * FROM players WHERE pid = {}'''.format(match["mom_id"]))
+                mom = cur.fetchone()
+                if match["winner_id"] == match["team1_id"]:
+                    winner = team_one
+                else:
+                    winner = team_two
+            teams = [team_one, team_two]
+            umpires = [f_umpire, s_umpire]
+            return render_template("matches.html", form = form, match = match, teams = teams,
+            umpires = umpires, toss_winner = toss_winner, winner = winner, mom = mom)
+        else:
+            return render_template("matches.html", form=form, match = match)
+    return render_template("matches.html", form=form, match = -1)
+
 
 if __name__ == "__main__":
     app.secret_key = "secret_placeholder_lmao"

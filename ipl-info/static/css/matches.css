@@ -1,0 +1,27 @@
+.form
+{
+    height: auto;
+}
+
+input
+{
+    margin-left: 5px;
+}
+
+.display
+{
+    height: auto;
+    width: 100%;
+    margin-top: 0.5%;
+    margin-bottom: 1%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.display * 
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

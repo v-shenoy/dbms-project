@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <h2> Compare </h2>
+        <form method="POST" action="" class="form">
+            <div> Season No. <input type="textbox" name = "season_id" required></div>
+            <div> Match No. <input type="textbox" name = "matchid" required></div>
+            <button type="submit" class="button"> Display </button>
+        </form>
+        {% if match != -1 %}
+            {% if match %}
+                <div class="display">
+                    <h3> Season {{match["season_id"]}}, Match {{match["matchid"]}} </h3>
+                    <h3> {{teams[0]["tname"]}} ({{teams[0]["tcode"]}}) v/s {{teams[1]["tname"]}} ({{teams[1]["tcode"]}})</h3>
+                    <h4> Date : {{match["match_date"]}} </h4>
+                    <h4> Venue : {{match["venue"]}}, {{match["city"]}}, {{match["host"]}}.</h4>
+                    <h4> Officials : {{umpires[0]["uname"]}} ({{umpires[0]["country"]}}), {{umpires[1]["uname"]}} ({{umpires[1]["country"]}}) </h4>
+                    <h4> {{toss_winner["tcode"]}} won the toss and decided to {{match["toss_decision"]}}.</h4>
+                    {% if match["is_result"] == 0 %}
+                        <h4> Match washed out. </h4>
+                    {% else %}
+                        {%  if match["win_type"] == "Tie" %}
+                            {% if match["is_superover"] == 0 %}
+                                <h4> Match tied. </h4>
+                            {% else %}
+                                <h4> {{winner["tname"]}} won the match in superover. </h4>
+                            {% endif %}
+                        {% elif match["win_type"] == "by runs" %}
+                            <h4> {{winner["tname"]}} won by {{match["won_by"]}} runs. </h4>
+                        {% else %}
+                            <h4> {{winner["tname"]}} won by {{match["won_by"]}} wickets. </h4>
+                        {% endif %}
+                        <h4> Man of the match : {{mom["pname"]}}</h4>
+                    {% endif %}
+                </div>
+            {% else %}
+                <h3> No results found. </h3>
+            {% endif %}        
+        {% endif %}
+    </div>
+    <link rel="stylesheet" href="static/css/form.css">
+    <link rel="stylesheet" href="static/css/matches.css">
+{% endblock %}

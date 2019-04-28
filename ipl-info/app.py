@@ -18,6 +18,7 @@ app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 # Init MySQL
 mysql = MySQL(app)
 
+
 # Setup routes
 @app.route("/")
 def index():
@@ -47,8 +48,10 @@ def login():
                 # Create session and redirect to home
                 session["logged_in"] = True
                 session["username"] = username
+                session["uid"] = data["uid"]
 
                 flash("You have now logged in as {}.".format(username), "success")
+                session["answers"] ,session["votes"] = get_answers_and_votes(cur, session['questions'])
                 return redirect(url_for("index"))
             else:
                 # Display incorrect login
@@ -94,6 +97,7 @@ def register():
 @app.route("/logout")
 def logout():
     session.clear()
+    session['questions'], session['answers'], session['votes'] = get_random_questions()
     flash("You are now logged out.", "success")
     return redirect(url_for("index"))
 
@@ -235,6 +239,76 @@ def matches():
             return render_template("matches.html", form=form, match = match)
     return render_template("matches.html", form=form, match = -1)
 
+@app.route("/submit", methods = ["POST"])
+def submit():
+    form = request.form
+    if ("logged_in" not in session) or (session["logged_in"] == False):
+        return redirect(url_for("login"))
+    else:
+        qid = form["question"]
+        value = form[qid]
+        cur = mysql.connection.cursor()
+        try:
+            cur.execute('''INSERT INTO answers(qid, uid, value) VALUES({}, {}, '{}')'''.format(qid, session["uid"], value))
+            mysql.connection.commit()
+            session["answers"] ,session["votes"] = get_answers_and_votes(cur, session['questions'])
+            return redirect(url_for("index"))
+        except:
+            session["answers"] ,session["votes"] = get_answers_and_votes(cur, session['questions'])
+            cur.close()
+            return redirect(url_for("index"))
+
+@app.route("/change", methods = ["POST"])
+def change():
+    session['questions'], session['answers'], session['votes'] = get_random_questions()
+    url = request.referrer.split("/")[-1]
+    if url != "":
+        return redirect(url_for(url))
+    else:
+        return redirect(url_for("index"))
+                
+@app.before_first_request
+def before_first():
+    session['questions'], session['answers'], session['votes'] = get_random_questions()
+
+def get_random_questions():
+    cur = mysql.connection.cursor()    
+    cur.execute('''SELECT * FROM questions ORDER BY RAND() LIMIT 4''')
+    questions = cur.fetchall()
+    
+    answers, votes = get_answers_and_votes(cur, questions)
+    cur.close()
+    return questions, answers, votes
+
+def get_answers_and_votes(cur, questions):
+    votes = []
+    answers = []
+    for i in range(4):
+        if ("logged_in" in session) and (session["logged_in"] == True):
+            length = cur.execute('''SELECT * FROM answers WHERE (qid = {} AND uid = {})'''.format(questions[i]["qid"], session["uid"]))
+            if length > 0:
+                value = cur.fetchone()["value"]
+                cur.execute('''SELECT * FROM questions WHERE (qid = {})'''.format(questions[i]["qid"]))
+                ans = cur.fetchone()[value]
+                answers.append(ans)
+            else:
+                answers.append(None)
+            question_votes = []
+            letters = ['a', 'b', 'c', 'd']
+            for letter in letters:
+                question_votes.append(cur.execute('''SELECT * FROM answers WHERE (qid = {} AND 
+                value = "{}")'''.format(questions[i]["qid"], 'q' + letter)))
+                
+            total_votes = sum(question_votes)
+            if total_votes != 0:
+                for i in range(4):
+                    question_votes[i] = round((question_votes[i]/total_votes)*100, 2)
+            votes.append(question_votes)
+        else:
+            answers.append(None)     
+    app.logger.info(answers)
+    app.logger.info(votes)   
+    return answers, votes
 
 if __name__ == "__main__":
     app.secret_key = "secret_placeholder_lmao"

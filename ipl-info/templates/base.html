@@ -20,36 +20,34 @@
                 <i class="fa fa-times" aria-hidden="true"></i>
             </div>
             <div class="questions">
-                <div class="question">
-                    <span class="question-header">Which batsman is more valuable to their team?</span>
-                    <span class="option"><input type="radio" name="question1-ans" value="kohli"> <span>Virat Kohli </span></span>
-                    <span class="option"><input type="radio" name="question1-ans" value="dhoni"> <span>MS Dhoni</span> </span>
-                    <span class="option"><input type="radio" name="question1-ans" value="rohit"> <span>Rohit Sharma </span></span>
-                    <span class="option"><input type="radio" name="question1-ans" value="warner"> <span>David Warner</span> </span>
-                </div>
-                <div class="question">
-                    <span class="question-header">Which has been the best team across all seasons of IPL?</span>
-                    <span class="option"><input type="radio" name="question2-ans" value="csk"> <span> Chennai Super Kings </span></span>
-                    <span class="option"><input type="radio" name="question2-ans" value="mi"> <span>Mumbai Indians</span> </span>
-                    <span class="option"><input type="radio" name="question2-ans" value="kkr"> <span> Kolkata Knight Riders </span></span>
-                    <span class="option"><input type="radio" name="question2-ans" value="srh"> <span>Sunrisers Hyderabad</span> </span>
-                </div>
-                <div class="question">
-                    <span class="question-header">Which has been the best team across all seasons of IPL?</span>
-                    <span class="option"><input type="radio" name="question2-ans" value="csk"> <span> Chennai Super Kings </span></span>
-                    <span class="option"><input type="radio" name="question2-ans" value="mi"> <span>Mumbai Indians</span> </span>
-                    <span class="option"><input type="radio" name="question2-ans" value="kkr"> <span> Kolkata Knight Riders </span></span>
-                    <span class="option"><input type="radio" name="question2-ans" value="srh"> <span>Sunrisers Hyderabad</span> </span>
-                </div>
-                <div class="question">
-                    <span class="question-header">Which has been the best team across all seasons of IPL?</span>
-                    <span class="option"><input type="radio" name="question2-ans" value="csk"> <span> Chennai Super Kings </span></span>
-                    <span class="option"><input type="radio" name="question2-ans" value="mi"> <span>Mumbai Indians</span> </span>
-                    <span class="option"><input type="radio" name="question2-ans" value="kkr"> <span> Kolkata Knight Riders </span></span>
-                    <span class="option"><input type="radio" name="question2-ans" value="srh"> <span>Sunrisers Hyderabad</span> </span>
-                </div>
+                {% for i in range(4) %}
+                    {% if session['answers'][i] == None %}
+                        <form method="POST" action="/submit" class="question">
+                            <input type="hidden" name = "question" value = "{{session['questions'][i]['qid']}}">
+                            <span class="question-header">{{session['questions'][i]["qtext"]}}</span>
+                            <span class="option"><input type="radio" name="{{session['questions'][i]['qid']}}" value="qa"> <span class="option-value">{{session['questions'][i]['qa']}} </span></span>
+                            <span class="option"><input type="radio" name="{{session['questions'][i]['qid']}}" value="qb"> <span class="option-value">{{session['questions'][i]['qb']}}</span> </span>
+                            <span class="option"><input type="radio" name="{{session['questions'][i]['qid']}}" value="qc"> <span class="option-value">{{session['questions'][i]['qc']}}</span></span>
+                            <span class="option"><input type="radio" name="{{session['questions'][i]['qid']}}" value="qd"> <span class="option-value">{{session['questions'][i]['qd']}}</span> </span>
+                            <button type="submit" class="button"> Submit </button>
+                        </form>
+                    {% else %}
+                        <form method="POST" action="/submit" class="question">
+                            <input type="hidden" name = "question" value = "{{session['questions'][i]['qid']}}">
+                            <span class="question-header">{{session['questions'][i]["qtext"]}}</span>
+                            <span class="misc"> You voted for {{session['answers'][i]}}. </span>
+                            <span class="option"><input type="radio" name="{{session['questions'][i]['qid']}}" value="qa"> <span class="option-value">{{session['questions'][i]['qa']}}</span> <span class="misc">{{session['votes'][i][0]}}%</span></span>
+                            <span class="option"><input type="radio" name="{{session['questions'][i]['qid']}}" value="qb"> <span class="option-value">{{session['questions'][i]['qb']}}</span> <span class="misc">{{session['votes'][i][1]}}%</span> </span>
+                            <span class="option"><input type="radio" name="{{session['questions'][i]['qid']}}" value="qc"> <span class="option-value">{{session['questions'][i]['qc']}}</span> <span class="misc">{{session['votes'][i][2]}}%</span></span>
+                            <span class="option"><input type="radio" name="{{session['questions'][i]['qid']}}" value="qd"> <span class="option-value">{{session['questions'][i]['qd']}}</span> <span class="misc">{{session['votes'][i][3]}}%</span> </span>
+                        </form>
+                    {% endif %}
+                {% endfor %}
             </div>
-            <button type="submit" class="button"> Submit </button>
+            <form method = "POST" action = "/change">
+                <input type="hidden" name = "change" value="change">
+                <button type="submit" class="button"> Change </button>                
+            </form>
         </div>
         {% include "includes/_nav.html" %}
         {% include "includes/_messages.html" %}
